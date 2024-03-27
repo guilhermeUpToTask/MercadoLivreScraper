@@ -4,23 +4,23 @@
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 
 # useful for handling different item types with a single interface
-from itemadapter import ItemAdapter
+import sqlite3
 
+from itemadapter import ItemAdapter
 
 class MercadoLivrePipeline:
     def __init__(self, *args, **kwargs):
        self.conn = None
        self.cursor = None
        try:
-           self.conn = psycopg2.connect(
-               dbname="mercado_livre_data",
-               user="postgres",
-               password="12345",
-               host="localhost"
-           )
+           self.conn = sqlite3.connect('./dbs/mercado_livre.db')
            self.cursor = self.conn.cursor()
-       except OperationalError as e:
-           print(f"Error connecting to PostgreSQL: {e}")
+
+            #Create tables if not exists
+           self.cursor.execute('''CREATE TABLE IF NOT EXISTS products (id INTEGER, name TEXT, url TEXT, rating_number FLOAT, rating_amount INTEGER)''')
+           self.cursor.execute('''CREATE TABLE IF NOT EXISTS product_prices (id INTEGER PRIMARY KEY, product_id INTEGER, price FLOAT, price_date DATETIME, FOREIGN KEY(product_id) REFERENCES products(id))''')
+       except sqlite3.Error as e:
+           print(f"Error connecting to SQLite: {e}")
        super().__init__(*args, **kwargs)
     
     def process_item(self, item, spider):
