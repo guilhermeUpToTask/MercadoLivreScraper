@@ -1,0 +1,21 @@
+# Scrapy
+.scrapy/
+*.csv
+*.json
+*.jl
+*.log
+*.egg-info/
+
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment
+.env
+
+# Virtual environment
+venv/
+env/
+*.venv/
+pip-wheel-metadata/
