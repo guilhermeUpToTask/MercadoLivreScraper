@@ -52,9 +52,9 @@ class OcultismoSpider(scrapy.Spider):
             
             yield MercadoLivreItem(id=id, name=name, price=price, url=url, rating_number=rating_number, rating_amount=rating_amount)
 
-            next_page=response.css('li.andes-pagination__button--next  a.andes-pagination__link::attr(href)').get()
-            print()
-            print()
-            print('next page...')
-            if next_page is not None:
-                yield response.follow(next_page, callback=self.parse)
+            #next_page=response.css('li.andes-pagination__button--next  a.andes-pagination__link::attr(href)').get()
+            #print()
+            #print()
+            #print('next page...')
+            #if next_page is not None:
+            #   yield response.follow(next_page, callback=self.parse)
