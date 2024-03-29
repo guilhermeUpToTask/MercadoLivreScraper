@@ -6,6 +6,7 @@
 
 **/.DS_Store
 **/__pycache__
+mercado_livre/venv
 **/.venv
 **/.classpath
 **/.dockerignore

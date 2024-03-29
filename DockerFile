@@ -20,13 +20,13 @@ WORKDIR /app
 RUN apt-get update && apt-get -y install cron
 
 # Copy your cron job script
-COPY mycronjob.sh /etc/cron.d/mycronjob.sh
+COPY scrapy_cron.sh /etc/cron.d/scrapy_cron.sh
 
 # Give execution rights on the cron job
-RUN chmod 0644 /etc/cron.d/mycronjob.sh
+RUN chmod 0644 /etc/cron.d/scrapy_cron.sh
 
 # Apply cron job
-RUN crontab /etc/cron.d/mycronjob.sh
+RUN crontab /etc/cron.d/scrapy_cron.sh
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
 # Leverage a cache mount to /root/.cache/pip to speed up subsequent builds.

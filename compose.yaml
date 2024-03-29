@@ -1,0 +1,10 @@
+
+services:
+  app:
+    image: mercado_livre
+    working_dir: /app
+    volumes:
+      - mercado_livre_products:/app/mercado_livre/mercado_livre/dbs
+
+volumes:
+  mercado_livre_products:

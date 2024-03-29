@@ -21,4 +21,5 @@ env/
 pip-wheel-metadata/
 
 # Database
-dbs/
+mercado_livre/dbs
+*.db
