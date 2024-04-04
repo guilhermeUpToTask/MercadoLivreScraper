@@ -9,6 +9,7 @@ class Product(BaseModel):
 
 
 class ProductPrice(BaseModel):
+    product_id: int
     price: float
     price_date: str
 

@@ -1,35 +1,55 @@
 from typing import Union
 from pydantic import BaseModel
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from src.models.product_model import ProductModel
-from src.common.product import Product, ProductPrice, ProductPrices
+from src.common.product import Product, ProductPrices
 
 router = APIRouter()
-
+product_model = ProductModel()
 
 @router.get("/products",)
-def get_products() -> Union[list[Product],None]:
-    products = [
-        Product(id='23232', name="teste", url="teste",
-                rating_number=3.5, rating_amount=10),
-        Product(id='255',name="teste", url="teste",
-                rating_number=3.5, rating_amount=10),
-        Product(id='2663',name="teste", url="teste", rating_number=3.5, rating_amount=10)
-    ]
-    return products
+async def get_products() -> Union[list[Product],None]:
+    try:
+        products = product_model.get_all_products()
+        return products
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        print(f'Internal Server Error from product Controler... ')
+        print(f"{str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        product_model.close_connection()
 
 
 @router.get("/products/{id}")
-def get_product(id: int) -> Union[Product, None]:
-    return ProductModel.get_product_by_id(id)
+async def get_product(id: int) -> Union[Product, None]:
+    try:
+        product = product_model.get_product_by_id(id)
+        return product
+    
+    except HTTPException as e:
+        raise e
+    
+    except Exception as e:
+        print(f'Internal Server Error from product Controler... ')
+        print(f"{str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        product_model.close_connection()
 
 
 @router.get("/products/{id}/price_story")
-def get_product_prices(id: int) -> Union[ProductPrices, None]:
-    return ProductPrices(
-        prices=[
-            ProductPrice(price=10.0, price_date="2021-01-01"),
-            ProductPrice(price=12.0, price_date="2021-02-01"),
-            ProductPrice(price=10.0, price_date="2021-03-01")
-        ]
-    )
+async def get_product_prices(id: int) -> Union[ProductPrices, None]:
+    try:
+        prices = product_model.get_prices_by_product_id(id)
+        return prices
+    
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        print(f'Internal Server Error from product Controler... ')
+        print(f"{str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        product_model.close_connection()
