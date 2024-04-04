@@ -1,0 +1,14 @@
+Product Type
+Name, Rating, RatingQuantity..
+
+getAllProducts
+get ProductsInfo{
+    size:int
+    lastEntryID: int
+    FirstEntryID:int
+    LastIsertionTime:Date
+}
+getProductsByPagination
+getProductsByTag
+getProductDetails(ProductId)
+getProductPriceStory(ProductId)
