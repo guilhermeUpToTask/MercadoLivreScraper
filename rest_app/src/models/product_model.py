@@ -46,13 +46,15 @@ class ProductModel:
             self.cursor.execute("SELECT * FROM products")
             products = self.cursor.fetchall()
             if products:
-                return products
-            else :
+                return [Product(id=product[0], name=product[1], url=product[2], rating_number=product[3], rating_amount=product[4]) for product in products]
+            else:
                 print(f"No products found.")
-                raise HTTPException(status_code=404, detail="No products found")
+                raise HTTPException(
+                    status_code=404, detail="No products found")
         except sqlite3.Error as e:
             print(f"Error getting products: {e}")
-            raise HTTPException(status_code=500, detail='Database Internal Server Error')
+            raise HTTPException(
+                status_code=500, detail='Database Internal Server Error')
 
 
     def get_product_by_id(self, id: int) -> Union[Product, None]:
@@ -88,8 +90,36 @@ class ProductModel:
             else:
                 raise HTTPException(
                     status_code=404, detail="Prices not found for product")
-            
+
         except sqlite3.Error as e:
             print(f"Error getting prices by product id: {e}")
             raise HTTPException(
-                    status_code=500, detail='Database Internal Server Error')
+                status_code=500, detail='Database Internal Server Error')
+
+    def get_products_size(self) -> Union[int, None]:
+        try:
+            self.cursor.execute("SELECT COUNT(*) FROM products")
+            products_size = self.cursor.fetchone()[0]
+            return products_size
+        except sqlite3.Error as e:
+            print(f"Error getting rows size: {e}")
+            raise HTTPException(
+                status_code=500, detail='Database Internal Server Error')
+
+    def get_products_by_page(self, page: int, page_size: int) -> Union[List[Product], None]:
+        try:
+            start = (page - 1) * page_size
+            end = start + page_size
+            self.cursor.execute(
+                f"SELECT * FROM products ORDER BY name LIMIT {start},{end}")
+            products = self.cursor.fetchall()
+            if products:
+                return [Product(id=product[0], name=product[1], url=product[2], rating_number=product[3], rating_amount=product[4]) for product in products]
+            else:
+                print(f"No products found.")
+                raise HTTPException(
+                    status_code=404, detail="No products found")
+        except sqlite3.Error as e:
+            print(f"Error getting products by page: {e}")
+            raise HTTPException(
+                status_code=500, detail='Database Internal Server Error')
