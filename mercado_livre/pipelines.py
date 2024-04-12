@@ -14,7 +14,7 @@ class MercadoLivrePipeline:
         self.conn = None
         self.cursor = None
         try:
-            self.conn = sqlite3.connect('./dbs/mercado_livre.db')
+            self.conn = sqlite3.connect('../dbs/mercado_livre.db')
             self.cursor = self.conn.cursor()
 
             # Create tables if not exists
