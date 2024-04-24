@@ -16,10 +16,14 @@ export default function Products(): React.ReactElement {
     }
 
     return (
-        <section>
-            <h1>Products List - Mercado Livre - Ocultismo</h1>
-            <ProductList />
-        </section>
+        <main className=' text-black mx-auto text-center bg-gray-200 '>
+            <header className='bg-yellow-300 p-4 mb-8'>
+                <h1 className='text-3xl font-bold font-sans'>Tracking Mercado Livre Product Prices - Ocultismo</h1>
+            </header>
+            <section className=''>
+                <ProductList />
+            </section>
+        </main>
     )
 
 }

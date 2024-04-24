@@ -12,7 +12,3 @@ class ProductPrice(BaseModel):
     product_id: int
     price: float
     price_date: str
-
-
-class ProductPrices(BaseModel):
-    prices: list[ProductPrice]

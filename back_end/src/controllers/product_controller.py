@@ -2,7 +2,7 @@ from typing import Union
 from pydantic import BaseModel
 from fastapi import APIRouter, HTTPException
 from src.models.product_model import ProductModel
-from src.common.product import Product, ProductPrices
+from src.common.product import Product, ProductPrice
 
 router = APIRouter()
 
@@ -40,8 +40,8 @@ async def get_product(id: int) -> Union[Product, None]:
         product_model.close_connection()
 
 
-@router.get("/products/{id}/price_story")
-async def get_product_prices(id: int) -> Union[ProductPrices, None]:
+@router.get("/products/{id}/price_history")
+async def get_product_prices(id: int) -> Union[list[ProductPrice], None]:
     try:
         product_model = ProductModel()
         prices = product_model.get_prices_by_product_id(id)

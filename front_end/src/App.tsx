@@ -1,5 +1,4 @@
 import Products from './components/Products'
-import './App.css'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const queryClientInstance = new QueryClient()

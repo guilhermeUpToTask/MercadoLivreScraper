@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import Union, List
-from src.common.product import Product, ProductPrice, ProductPrices
+from src.common.product import Product, ProductPrice, ProductPrice
 import sqlite3
 from os import path
 from fastapi import HTTPException
@@ -80,13 +80,13 @@ class ProductModel:
                 status_code=500, detail='Database Internal Server Error')
 
 
-    def get_prices_by_product_id(self, product_id: int) -> Union[ProductPrices, None]:
+    def get_prices_by_product_id(self, product_id: int) -> Union[list[ProductPrice], None]:
         try:
             self.cursor.execute(
                 "SELECT * FROM product_prices WHERE product_id=?", (product_id, ))
             prices = self.cursor.fetchall()
             if prices:
-                return ProductPrices(prices=[ProductPrice(product_id=price[1], price=price[2], price_date=price[3]) for price in prices])
+                return [ProductPrice(product_id=price[1], price=price[2], price_date=price[3]) for price in prices]
             else:
                 raise HTTPException(
                     status_code=404, detail="Prices not found for product")
