@@ -3,8 +3,11 @@ services:
   app:
     image: mercado_livre
     working_dir: /app
+    ports:
+      - 0.0.0.0:8000:8000
     volumes:
-      - mercado_livre_products:/app/mercado_livre/dbs
+      - mercado_livre_products:/app/dbs
+    
 
 volumes:
 

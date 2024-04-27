@@ -1,5 +1,4 @@
 from typing import Union
-from pydantic import BaseModel
 from fastapi import APIRouter, HTTPException
 from src.models.product_model import ProductModel
 from src.common.product import Product, ProductPrice

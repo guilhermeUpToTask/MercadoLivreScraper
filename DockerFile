@@ -40,8 +40,10 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 # Copy the source code into the container.
 COPY . .
 
+# Give execution rights on the start script
+
 # Expose the port that the application listens on.
 EXPOSE 8000
 
-# Start cron service
-CMD ["cron", "-f"]
+# run the shell script
+ENTRYPOINT [ "/app/start.sh" ]
