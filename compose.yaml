@@ -1,7 +1,7 @@
 
 services:
   app:
-    image: mercado_livre
+    image: guilhermeuptotask/mercado-livre-scraper
     working_dir: /app
     ports:
       - 0.0.0.0:8000:8000
